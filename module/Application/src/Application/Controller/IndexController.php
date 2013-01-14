@@ -11,11 +11,14 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Http\Response;
 
 class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        return new ViewModel();
+	$feed = \Zend\Feed\Reader\Reader::import('http://previous.delicious.com/v2/rss/pwarnock/NANN');
+	$this->response->setContent($feed->saveXML());
+	return $this->response;
     }
 }
